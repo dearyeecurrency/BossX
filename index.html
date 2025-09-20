@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Room dalam Card</title>
+  <title>Chat Room BossX - Dalam Card</title>
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
       background-color: #121212;
       color: #e0e0e0;
       padding: 2rem;
+      display: flex;
+      justify-content: center;
     }
 
     .card {
       width: 100%;
-      max-width: 500px;
-      margin: auto;
+      max-width: 600px;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       background-color: #1a1a1a;
       border: 1px solid #2d2d2d;
+      height: 700px; /* Atur tinggi sesuai kebutuhan */
     }
 
     .card-header {
@@ -40,14 +48,130 @@
       gap: 8px;
     }
 
+    .online-count {
+      color: #00ff00;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     .card-body {
-      height: 400px;
-      overflow-y: auto;
-      padding: 1rem;
+      display: flex;
+      height: calc(100% - 60px); /* Mengurangi header & footer */
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 180px;
       background-color: #1a1a1a;
+      padding: 1rem;
+      border-right: 1px solid #2d2d2d;
+      overflow-y: auto;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 1rem;
+      color: #bb34ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .room-list {
+      list-style: none;
+    }
+
+    .room-item {
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      background-color: #222;
+      border: 1px solid #333;
+    }
+
+    .room-item.active {
+      background-color: #330066;
+      border-color: #bb34ff;
+      color: white;
+    }
+
+    .room-item:hover {
+      background-color: #2a2a2a;
+    }
+
+    .room-name {
+      font-weight: bold;
+      color: #bb34ff;
+    }
+
+    .room-desc {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    .online-users {
+      margin-top: 2rem;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #2d2d2d;
+    }
+
+    .online-users h3 {
+      color: #00ff00;
+      margin-bottom: 0.5rem;
+    }
+
+    .online-users p {
+      color: #aaa;
+    }
+
+    .main-chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #1a1a1a;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .channel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #2d2d2d;
+    }
+
+    .channel-name {
+      font-size: 1.2rem;
+      color: #bb34ff;
+    }
+
+    .channel-tag {
+      background-color: #2d2d2d;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      color: #bbb;
+    }
+
+    .live-status {
+      color: #00ff00;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 0;
       margin-bottom: 1rem;
     }
 
@@ -65,8 +189,8 @@
     }
 
     .avatar {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background-color: #bb34ff;
       color: white;
@@ -74,28 +198,26 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .username {
       font-weight: 600;
-      font-size: 0.9rem;
     }
 
     .timestamp {
       color: #777;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
 
     .message-content {
       color: #e0e0e0;
       line-height: 1.4;
-      font-size: 0.9rem;
     }
 
     .input-area {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       padding: 1rem;
       border-top: 1px solid #2d2d2d;
       background-color: #1a1a1a;
@@ -103,25 +225,32 @@
 
     .message-input {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #2d2d2d;
       border-radius: 8px;
       background-color: #222;
       color: white;
       outline: none;
       resize: none;
-      font-size: 0.9rem;
+      font-size: 1rem;
+    }
+
+    .char-counter {
+      color: #777;
+      font-size: 0.8rem;
+      text-align: right;
+      margin-bottom: 5px;
     }
 
     .send-button {
       background-color: #bb34ff;
       color: white;
       border: none;
-      padding: 10px 16px;
+      padding: 12px 20px;
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.9rem;
+      transition: background-color 0.3s;
     }
 
     .send-button:hover {
@@ -131,35 +260,78 @@
 </head>
 <body>
 
-  <!-- CARD CHAT ROOM -->
+  <!-- CARD CHAT ROOM LENGKAP -->
   <div class="card">
     <div class="card-header">
       <div class="card-title">
         <span>💬</span> Chat Room
       </div>
-      <div style="color: #00ff00; font-size: 0.9rem;">🟢 Live</div>
+      <div class="online-count">
+        <span>0</span> Online
+      </div>
     </div>
 
     <div class="card-body">
-      <div class="messages" id="messages">
-        <div class="message">
-          <div class="message-header">
-            <div class="avatar">🤖</div>
-            <div class="username">BossX Bot</div>
-            <div class="timestamp">00:00</div>
-          </div>
-          <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi seputar Validator & Masternode.<br>Silakan mulai percakapan!</div>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h3><span>🏠</span> Chat Rooms</h3>
+        <ul class="room-list">
+          <li class="room-item active" data-room="#validator">
+            <div class="room-name">#validator</div>
+            <div class="room-desc">Validator & Masternode Discussion</div>
+          </li>
+        </ul>
+
+        <div class="online-users">
+          <h3><span>👥</span> Online (0)</h3>
+          <p>Tidak ada user online</p>
         </div>
       </div>
 
-      <div class="input-area">
-        <textarea class="message-input" id="message-input" placeholder="Kirim pesan..." maxlength="500"></textarea>
-        <button class="send-button" id="send-button">Kirim 🔼</button>
+      <!-- Main Chat Area -->
+      <div class="main-chat">
+        <div class="channel-header">
+          <div>
+            <span class="channel-name"># validator</span>
+            <span class="channel-tag">Validator & Masternode Discussion</span>
+          </div>
+          <div class="live-status">
+            <span>🟢</span> Live
+          </div>
+        </div>
+
+        <div class="messages" id="messages">
+          <div class="message">
+            <div class="message-header">
+              <div class="avatar">🤖</div>
+              <div class="username">BossX Bot</div>
+              <div class="timestamp">--:--</div>
+            </div>
+            <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi seputar Validator & Masternode.<br>Silakan mulai percakapan!</div>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <div class="char-counter"><span id="char-count">0</span>/500</div>
+          <textarea class="message-input" id="message-input" placeholder="Kirim pesan ke #validator..." maxlength="500"></textarea>
+          <button class="send-button" id="send-button">Kirim 🔼</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    // Interaksi room
+    document.querySelectorAll('.room-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.room-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const roomName = item.getAttribute('data-room');
+        document.querySelector('.channel-name').textContent = roomName;
+      });
+    });
+
+    // Kirim pesan
     const messageInput = document.getElementById('message-input');
     const sendButton = document.getElementById('send-button');
     const messages = document.getElementById('messages');
@@ -184,6 +356,7 @@
       messages.appendChild(messageDiv);
       messages.scrollTop = messages.scrollHeight;
       messageInput.value = '';
+      updateCharCount();
     }
 
     sendButton.addEventListener('click', sendMessage);
@@ -194,12 +367,24 @@
       }
     });
 
-    // Escape HTML agar aman
+    // Update char counter
+    function updateCharCount() {
+      const count = messageInput.value.length;
+      document.getElementById('char-count').textContent = count;
+    }
+
+    messageInput.addEventListener('input', updateCharCount);
+
+    // Escape HTML agar aman dari XSS
     function escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
     }
+
+    // Simulasi user online
+    let userCount = Math.floor(Math.random() * 10) + 1;
+    document.querySelector('.online-count span').textContent = userCount;
   </script>
 
 </body>
