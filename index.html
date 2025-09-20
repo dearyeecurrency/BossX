@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Room BossX - Premium Animasi</title>
+  <title>Chat Room BossX - Lebih Lebar & Lega</title>
   <style>
     * {
       margin: 0;
@@ -24,13 +24,13 @@
 
     .card {
       width: 100%;
-      max-width: 600px;
+      max-width: 800px; /* 👈 DILABARIN! Dari 600px jadi 800px */
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(187, 52, 255, 0.3);
       background-color: #1a1a1a;
       border: 1px solid #2d2d2d;
-      height: 700px;
+      height: 720px; /* Sedikit dinaikkan biar lebih lega */
       animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
     }
@@ -109,9 +109,9 @@
     }
 
     .sidebar {
-      width: 180px;
+      width: 220px; /* 👈 DILABARIN! Dari 180px jadi 220px */
       background: linear-gradient(to bottom, #1a1a1a, #20202a);
-      padding: 1rem;
+      padding: 1.2rem;
       border-right: 1px solid #330066;
       overflow-y: auto;
       transition: all 0.3s ease;
@@ -122,12 +122,13 @@
     }
 
     .sidebar h3 {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       color: #bb34ff;
       display: flex;
       align-items: center;
       gap: 8px;
       font-weight: 700;
+      font-size: 1.1rem;
     }
 
     .room-list {
@@ -135,8 +136,8 @@
     }
 
     .room-item {
-      margin-bottom: 12px;
-      padding: 14px;
+      margin-bottom: 14px;
+      padding: 16px;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -172,34 +173,35 @@
     .room-name {
       font-weight: bold;
       color: #bb34ff;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
     }
 
     .room-desc {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-top: 4px;
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-top: 6px;
     }
 
     .online-users {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       background: rgba(0, 255, 0, 0.05);
-      padding: 1rem;
+      padding: 1.2rem;
       border-radius: 12px;
       border: 1px solid rgba(0, 255, 0, 0.2);
     }
 
     .online-users h3 {
       color: #00ff00;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 1rem;
     }
 
     .online-users p {
       color: #aaa;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     .main-chat {
@@ -207,7 +209,7 @@
       display: flex;
       flex-direction: column;
       background: #1a1a1a;
-      padding: 1rem;
+      padding: 1.2rem;
       overflow-y: auto;
     }
 
@@ -215,29 +217,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
       padding-bottom: 0.8rem;
       border-bottom: 2px solid #330066;
     }
 
     .channel-name {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       color: #bb34ff;
       font-weight: 700;
     }
 
     .channel-tag {
       background: rgba(187, 52, 255, 0.1);
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #ccc;
       border: 1px solid rgba(187, 52, 255, 0.3);
     }
 
     .live-status {
       color: #00ff00;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -247,11 +249,11 @@
     .live-status::before {
       content: '';
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #00ff00;
-      box-shadow: 0 0 6px #00ff00;
+      box-shadow: 0 0 8px #00ff00;
       animation: blink 1.5s infinite;
     }
 
@@ -264,12 +266,12 @@
       flex: 1;
       overflow-y: auto;
       padding: 0.5rem 0;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
       scroll-behavior: smooth;
     }
 
     .message {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
       display: flex;
       flex-direction: column;
       animation: messageIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -292,13 +294,13 @@
     .message-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+      gap: 12px;
+      margin-bottom: 8px;
     }
 
     .avatar {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: linear-gradient(135deg, #bb34ff, #7a28cc);
       color: white;
@@ -306,43 +308,43 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 16px;
-      box-shadow: 0 0 10px rgba(187, 52, 255, 0.5);
+      font-size: 18px;
+      box-shadow: 0 0 12px rgba(187, 52, 255, 0.5);
     }
 
     .username {
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .timestamp {
       color: #777;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       margin-left: auto;
     }
 
     .message-content {
       color: #e0e0e0;
-      line-height: 1.5;
+      line-height: 1.6;
       background: rgba(255,255,255,0.05);
-      padding: 12px 16px;
-      border-radius: 12px;
-      border-left: 3px solid #bb34ff;
-      font-size: 0.95rem;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border-left: 4px solid #bb34ff;
+      font-size: 1rem;
       word-break: break-word;
     }
 
     .input-area {
       display: flex;
-      gap: 10px;
-      padding: 1rem;
+      gap: 12px;
+      padding: 1.2rem 0 0;
       border-top: 1px solid #2d2d2d;
       background: #1a1a1a;
     }
 
     .char-counter {
       color: #777;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       text-align: right;
       margin-bottom: 5px;
       font-weight: 600;
@@ -350,15 +352,16 @@
 
     .message-input {
       flex: 1;
-      padding: 14px;
+      padding: 16px;
       border: 1px solid #333;
-      border-radius: 12px;
+      border-radius: 14px;
       background: #222;
       color: white;
       outline: none;
       resize: none;
-      font-size: 1rem;
+      font-size: 1.05rem;
       transition: all 0.3s ease;
+      line-height: 1.4;
     }
 
     .message-input:focus {
@@ -371,17 +374,18 @@
       background: linear-gradient(135deg, #bb34ff, #8a2be2);
       color: white;
       border: none;
-      padding: 14px 24px;
-      border-radius: 12px;
+      padding: 16px 28px;
+      border-radius: 14px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: 0 4px 15px rgba(187, 52, 255, 0.3);
+      min-width: 120px;
     }
 
     .send-button:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: 0 6px 20px rgba(187, 52, 255, 0.5);
     }
 
@@ -392,11 +396,12 @@
     /* Responsive */
     @media (max-width: 768px) {
       .card {
-        height: 80vh;
+        height: 85vh;
         max-width: 95%;
       }
       .sidebar {
-        width: 150px;
+        width: 180px;
+        padding: 1rem;
       }
       .card-header {
         padding: 1rem;
@@ -405,24 +410,28 @@
 
     @media (max-width: 480px) {
       .sidebar {
-        width: 120px;
+        width: 140px;
         font-size: 0.9rem;
       }
       .room-name {
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
       .input-area {
         flex-direction: column;
       }
       .send-button {
-        padding: 12px;
+        padding: 14px;
+        font-size: 1rem;
+      }
+      .message-input {
+        padding: 14px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- CARD CHAT ROOM PREMIUM -->
+  <!-- CARD CHAT ROOM PREMIUM - LEBAR & LEGA -->
   <div class="card">
     <div class="card-header">
       <div class="card-title">
@@ -440,13 +449,13 @@
         <ul class="room-list">
           <li class="room-item active" data-room="#validator">
             <div class="room-name">#validator</div>
-            <div class="room-desc">Validator & Masternode</div>
+            <div class="room-desc">Validator & Masternode Discussion</div>
           </li>
         </ul>
 
         <div class="online-users">
           <h3><span>👥</span> Online (<span id="user-count">0</span>)</h3>
-          <p>Silakan mulai chatting!</p>
+          <p>Silakan mulai chatting bersama komunitas!</p>
         </div>
       </div>
 
@@ -455,7 +464,7 @@
         <div class="channel-header">
           <div>
             <span class="channel-name"># validator</span>
-            <span class="channel-tag">Validator & Masternode</span>
+            <span class="channel-tag">Validator & Masternode Discussion</span>
           </div>
           <div class="live-status">Live</div>
         </div>
@@ -467,14 +476,14 @@
               <div class="username">BossX Bot</div>
               <div class="timestamp">00:00</div>
             </div>
-            <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi seputar Validator & Masternode.<br>Silakan mulai percakapan!</div>
+            <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi seputar Validator & Masternode.<br>Silakan mulai percakapan — tim kami siap membantu!</div>
           </div>
         </div>
 
         <div class="input-area">
           <div class="char-counter"><span id="char-count">0</span>/500</div>
-          <textarea class="message-input" id="message-input" placeholder="Kirim pesan ke #validator..." maxlength="500"></textarea>
-          <button class="send-button" id="send-button">Kirim 🔼</button>
+          <textarea class="message-input" id="message-input" placeholder="Ketik pesan Anda di sini..." maxlength="500"></textarea>
+          <button class="send-button" id="send-button">Kirim 💬</button>
         </div>
       </div>
     </div>
