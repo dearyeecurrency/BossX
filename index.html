@@ -258,7 +258,6 @@
       background-color: #a22acc;
     }
 
-    /* Animasi scroll halus */
     .messages {
       scroll-behavior: smooth;
     }
@@ -286,15 +285,8 @@
     <div class="sidebar">
       <h3><span>🏠</span> Chat Rooms</h3>
       <ul class="room-list">
-        <li class="room-item active" data-room="#general">
-          <div class="room-name">#general</div>
-          <div class="room-desc">General Discussion</div>
-        </li>
-        <li class="room-item" data-room="#trading">
-          <div class="room-name">#trading</div>
-          <div class="room-desc">Trading Signals & Analysis</div>
-        </li>
-        <li class="room-item" data-room="#validator">
+        <!-- HANYA ROOM #validator yang tersisa -->
+        <li class="room-item active" data-room="#validator">
           <div class="room-name">#validator</div>
           <div class="room-desc">Validator & Masternode Discussion</div>
         </li>
@@ -310,8 +302,8 @@
     <div class="main-chat">
       <div class="channel-header">
         <div>
-          <span class="channel-name"># general</span>
-          <span class="channel-tag">General Discussion</span>
+          <span class="channel-name"># validator</span>
+          <span class="channel-tag">Validator & Masternode Discussion</span>
         </div>
         <div class="live-status">
           <span>🟢</span> Live
@@ -319,35 +311,35 @@
       </div>
 
       <div class="messages" id="messages">
-        <!-- Pesan Selamat Datang Resmi -->
+        <!-- Pesan Selamat Datang -->
         <div class="message">
           <div class="message-header">
             <div class="avatar">🤖</div>
             <div class="username">BossX Bot</div>
             <div class="timestamp">--:--</div>
           </div>
-          <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi umum, trading, atau validator.<br>Silakan mulai percakapan!</div>
+          <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi seputar Validator & Masternode.<br>Silakan mulai percakapan!</div>
         </div>
       </div>
 
       <div class="input-area">
         <div class="char-counter"><span id="char-count">0</span>/500</div>
-        <textarea class="message-input" id="message-input" placeholder="Kirim pesan ke #general..." maxlength="500"></textarea>
+        <textarea class="message-input" id="message-input" placeholder="Kirim pesan ke #validator..." maxlength="500"></textarea>
         <button class="send-button" id="send-button">Kirim 🔼</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Interaksi sederhana: pindah room
+    // Hanya 1 room, jadi tidak perlu event listener pindah room
+    // Tapi tetap dipasang agar tidak error jika nanti ditambah room
+
     document.querySelectorAll('.room-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.room-item').forEach(i => i.classList.remove('active'));
         item.classList.add('active');
         const roomName = item.getAttribute('data-room');
         document.querySelector('.channel-name').textContent = roomName;
-        // Kosongkan chat saat ganti room (opsional)
-        // document.getElementById('messages').innerHTML = '';
       });
     });
 
