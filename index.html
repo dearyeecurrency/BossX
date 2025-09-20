@@ -257,6 +257,11 @@
     .send-button:hover {
       background-color: #a22acc;
     }
+
+    /* Animasi scroll halus */
+    .messages {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 <body>
@@ -268,7 +273,7 @@
       <p>Diskusi real-time dengan komunitas BossX traders & validators</p>
     </div>
     <div class="online-count">
-      <span>0</span> Online
+      <span id="online-count">0</span> Online
       <button style="background: #330066; border: none; color: white; padding: 8px; border-radius: 8px; cursor: pointer;">
         💬
       </button>
@@ -296,7 +301,7 @@
       </ul>
 
       <div class="online-users">
-        <h3><span>👥</span> Online (0)</h3>
+        <h3><span>👥</span> Online (<span id="user-count">0</span>)</h3>
         <p>Tidak ada user online</p>
       </div>
     </div>
@@ -313,37 +318,22 @@
         </div>
       </div>
 
-      <div class="messages">
+      <div class="messages" id="messages">
+        <!-- Pesan Selamat Datang Resmi -->
         <div class="message">
           <div class="message-header">
-            <div class="avatar">FE</div>
-            <div class="username">Fery Muliaawan</div>
-            <div class="timestamp">05.04</div>
+            <div class="avatar">🤖</div>
+            <div class="username">BossX Bot</div>
+            <div class="timestamp">--:--</div>
           </div>
-          <div class="message-content">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-        </div>
-        <div class="message">
-          <div class="message-header">
-            <div class="avatar">FE</div>
-            <div class="username">Fery Muliaawan</div>
-            <div class="timestamp">05.04</div>
-          </div>
-          <div class="message-content">Test pesan fixed! Chat Room BossX works!</div>
-        </div>
-        <div class="message">
-          <div class="message-header">
-            <div class="avatar">FE</div>
-            <div class="username">Fery Muliaawan</div>
-            <div class="timestamp">05.10</div>
-          </div>
-          <div class="message-content">BossX to the moon</div>
+          <div class="message-content">👋 Selamat datang di Chat Room BossX!<br>Gunakan channel ini untuk diskusi umum, trading, atau validator.<br>Silakan mulai percakapan!</div>
         </div>
       </div>
 
       <div class="input-area">
-        <div class="char-counter">0/500</div>
-        <textarea class="message-input" placeholder="Kirim pesan ke #general..." maxlength="500"></textarea>
-        <button class="send-button">Kirim 🔼</button>
+        <div class="char-counter"><span id="char-count">0</span>/500</div>
+        <textarea class="message-input" id="message-input" placeholder="Kirim pesan ke #general..." maxlength="500"></textarea>
+        <button class="send-button" id="send-button">Kirim 🔼</button>
       </div>
     </div>
   </div>
@@ -356,13 +346,38 @@
         item.classList.add('active');
         const roomName = item.getAttribute('data-room');
         document.querySelector('.channel-name').textContent = roomName;
+        // Kosongkan chat saat ganti room (opsional)
+        // document.getElementById('messages').innerHTML = '';
       });
     });
 
     // Kirim pesan
-    const messageInput = document.querySelector('.message-input');
-    const sendButton = document.querySelector('.send-button');
-    const messages = document.querySelector('.messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const messages = document.getElementById('messages');
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+
+      const now = new Date();
+      const timeString = `${now.getHours().toString().padStart(2, '0')}.${now.getMinutes().toString().padStart(2, '0')}`;
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      messageDiv.innerHTML = `
+        <div class="message-header">
+          <div class="avatar">👤</div>
+          <div class="username">User</div>
+          <div class="timestamp">${timeString}</div>
+        </div>
+        <div class="message-content">${escapeHtml(text)}</div>
+      `;
+      messages.appendChild(messageDiv);
+      messages.scrollTop = messages.scrollHeight;
+      messageInput.value = '';
+      updateCharCount();
+    }
 
     sendButton.addEventListener('click', sendMessage);
     messageInput.addEventListener('keypress', (e) => {
@@ -372,30 +387,25 @@
       }
     });
 
-    function sendMessage() {
-      const text = messageInput.value.trim();
-      if (!text) return;
-
-      const messageDiv = document.createElement('div');
-      messageDiv.className = 'message';
-      messageDiv.innerHTML = `
-        <div class="message-header">
-          <div class="avatar">FE</div>
-          <div class="username">Fery Muliaawan</div>
-          <div class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
-        </div>
-        <div class="message-content">${text}</div>
-      `;
-      messages.appendChild(messageDiv);
-      messages.scrollTop = messages.scrollHeight;
-      messageInput.value = '';
+    // Update char counter
+    function updateCharCount() {
+      const count = messageInput.value.length;
+      document.getElementById('char-count').textContent = count;
     }
 
-    // Update char counter
-    messageInput.addEventListener('input', () => {
-      const count = messageInput.value.length;
-      document.querySelector('.char-counter').textContent = `${count}/500`;
-    });
+    messageInput.addEventListener('input', updateCharCount);
+
+    // Escape HTML agar aman dari XSS (dasar)
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Simulasi user online (dummy)
+    let userCount = Math.floor(Math.random() * 10) + 1;
+    document.getElementById('online-count').textContent = userCount;
+    document.getElementById('user-count').textContent = userCount;
   </script>
 
 </body>
