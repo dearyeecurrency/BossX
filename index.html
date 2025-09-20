@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Room BossX - Ringkas & Auto Scroll</title>
+  <title>Chat Room BossX - Avatar di Kiri</title>
   <style>
     * {
       margin: 0;
@@ -272,39 +272,41 @@
       overflow-y: auto;
       padding: 0.5rem 0;
       margin-bottom: 1.5rem;
-      scroll-behavior: smooth; /* 👈 Smooth scroll */
+      scroll-behavior: smooth;
     }
 
     .message {
-      margin-bottom: 1rem; /* 👈 Diperkecil dari 2rem */
+      margin-bottom: 1rem;
       display: flex;
-      flex-direction: column;
-      animation: messageIn 0.3s ease-out; /* 👈 Lebih cepat */
+      align-items: flex-start; /* 👈 Penting: align avatar dan chat sejajar atas */
+      animation: messageIn 0.3s ease-out;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateX(-10px);
     }
 
     .message.animate {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
 
     @keyframes messageIn {
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
       }
     }
 
-    .message-header {
+    /* 👇 Bagian User Info (Avatar + Nama) */
+    .user-info {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 6px; /* 👈 Diperkecil */
+      margin-right: 14px;
+      flex-shrink: 0; /* Biar tidak menyusut */
     }
 
     .avatar {
-      width: 40px; /* 👈 Diperkecil */
+      width: 40px;
       height: 40px;
       border-radius: 50%;
       background: linear-gradient(135deg, #bb34ff, #7a28cc);
@@ -313,31 +315,56 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 16px; /* 👈 Diperkecil */
+      font-size: 16px;
       box-shadow: 0 0 12px rgba(187, 52, 255, 0.5);
     }
 
     .username {
       font-weight: 700;
-      font-size: 1rem; /* 👈 Diperkecil dari 1.2rem */
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-top: 4px;
+      text-align: center;
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 👇 Bagian Isi Chat */
+    .message-content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .message-sender {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #bb34ff;
     }
 
     .timestamp {
       color: #888;
-      font-size: 0.85rem; /* 👈 Diperkecil */
-      margin-left: auto;
+      font-size: 0.8rem;
     }
 
     .message-content {
       color: #ffffff;
-      line-height: 1.5; /* 👈 Diperkecil dari 1.8 */
+      line-height: 1.5;
       background: rgba(255,255,255,0.03);
-      padding: 14px 18px; /* 👈 Diperkecil */
+      padding: 14px 18px;
       border-radius: 14px;
-      border-left: 4px solid #bb34ff;
-      font-size: 0.95rem; /* 👈 Diperkecil dari 1.1rem */
+      border-top-left-radius: 4px; /* Sesuaikan agar terlihat natural */
+      font-size: 0.95rem;
       word-break: break-word;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      max-width: 85%;
     }
 
     .input-area {
@@ -358,14 +385,14 @@
 
     .message-input {
       flex: 1;
-      padding: 16px; /* 👈 Diperkecil */
+      padding: 16px;
       border: 1px solid #3a3a4a;
       border-radius: 16px;
       background: #1a1a1a;
       color: white;
       outline: none;
       resize: none;
-      font-size: 1rem; /* 👈 Diperkecil */
+      font-size: 1rem;
       transition: all 0.4s ease;
       line-height: 1.4;
     }
@@ -380,11 +407,11 @@
       background: linear-gradient(135deg, #bb34ff, #8a2be2);
       color: white;
       border: none;
-      padding: 16px 28px; /* 👈 Diperkecil */
+      padding: 16px 28px;
       border-radius: 16px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 1.1rem; /* 👈 Diperkecil */
+      font-size: 1.1rem;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: 0 6px 25px rgba(187, 52, 255, 0.4);
       min-width: 140px;
@@ -426,27 +453,34 @@
     }
 
     @media (max-width: 480px) {
-      .sidebar {
-        width: 160px;
+      .user-info {
+        margin-right: 10px;
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+      .username {
+        font-size: 0.75rem;
+        max-width: 50px;
+      }
+      .message-content {
+        font-size: 0.9rem;
+        padding: 12px 16px;
+      }
+      .message-sender {
         font-size: 0.9rem;
       }
-      .room-name {
-        font-size: 1.1rem;
-      }
-      .send-button {
-        padding: 14px;
-        font-size: 1rem;
-      }
-      .message-input {
-        padding: 14px;
-        font-size: 0.95rem;
+      .timestamp {
+        font-size: 0.75rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- CARD CHAT ROOM SUPER LEBAR + RINGKAS -->
+  <!-- CARD CHAT ROOM - AVATAR DI KIRI -->
   <div class="card">
     <div class="card-header">
       <div class="card-title">
@@ -486,14 +520,19 @@
 
         <div class="messages" id="messages">
           <div class="message animate">
-            <div class="message-header">
+            <div class="user-info">
               <div class="avatar">🤖</div>
               <div class="username">BossX Bot</div>
-              <div class="timestamp">00:00</div>
             </div>
-            <div class="message-content">
-              👋 <strong>Selamat datang di Chat Room BossX!</strong><br>
-              Di sini kamu bisa diskusi tentang setup, troubleshooting, optimasi reward, dan lainnya seputar validator & masternode.
+            <div class="message-content-wrapper">
+              <div class="message-header">
+                <div class="message-sender">BossX Bot</div>
+                <div class="timestamp">00:00</div>
+              </div>
+              <div class="message-content">
+                👋 <strong>Selamat datang di Chat Room BossX!</strong><br>
+                Di sini kamu bisa diskusi tentang setup, troubleshooting, optimasi reward, dan lainnya seputar validator & masternode.
+              </div>
             </div>
           </div>
         </div>
@@ -514,7 +553,7 @@
       messages.forEach((msg, index) => {
         setTimeout(() => {
           msg.classList.add('animate');
-        }, index * 80); // Lebih cepat biar nggak delay
+        }, index * 80);
       });
     }
 
@@ -543,12 +582,17 @@
       const messageDiv = document.createElement('div');
       messageDiv.className = 'message';
       messageDiv.innerHTML = `
-        <div class="message-header">
+        <div class="user-info">
           <div class="avatar">👤</div>
           <div class="username">User</div>
-          <div class="timestamp">${timeString}</div>
         </div>
-        <div class="message-content">${escapeHtml(text)}</div>
+        <div class="message-content-wrapper">
+          <div class="message-header">
+            <div class="message-sender">User</div>
+            <div class="timestamp">${timeString}</div>
+          </div>
+          <div class="message-content">${escapeHtml(text)}</div>
+        </div>
       `;
       messagesContainer.appendChild(messageDiv);
       messageInput.value = '';
